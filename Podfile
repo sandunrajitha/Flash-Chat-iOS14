@@ -5,7 +5,8 @@ target 'Flash Chat iOS14' do
 
   # Pods for Flash Chat iOS14
 
-	pod 'CLTypingLabel'
-    pod 'Firebase/Auth'
-    pod 'Firebase/Firestore'
+	#pod 'CLTypingLabel'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
+  
 end

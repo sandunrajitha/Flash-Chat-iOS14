@@ -17,14 +17,14 @@ class ChatViewController: UIViewController {
     let messages = [
         Message(sender: "1@2.com", body: "Hello"),
         Message(sender: "2@1.com", body: "こんにちは"),
-        Message(sender: "a@2.com", body: "你好")
+        Message(sender: "a@2.com", body: "你好"),        
     ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = K.appName
         tableView.dataSource = self
-        tableView.delegate = self
+        tableView.register(UINib(nibName: K.cellNibName, bundle: nil), forCellReuseIdentifier: K.cellIdentifier)
         navigationItem.hidesBackButton = true
     }
     @IBAction func logoutPressed(_ sender: UIBarButtonItem) {
@@ -50,9 +50,9 @@ extension ChatViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier, for: indexPath) as! MessageCell
         cell.largeContentTitle = "bla"
-        cell.textLabel?.text = messages[indexPath.row].body
+        cell.label.text = messages[indexPath.row].body
         return cell
     }
 }

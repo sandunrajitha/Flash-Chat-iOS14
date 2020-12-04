@@ -19,8 +19,7 @@ class RegisterViewController: UIViewController {
         if let email = emailTextfield.text, let password = passwordTextfield.text{
             
             Auth.auth().createUser(withEmail: email, password: password) {authResult, error in
-                print(authResult?.additionalUserInfo ?? "bla")
-                
+
                 if let e = error {
                     print(e)
                           
@@ -30,7 +29,7 @@ class RegisterViewController: UIViewController {
                     self.present(alert, animated: true, completion: nil)
                     
                 } else {
-                    self.performSegue(withIdentifier: "RegisterToChat", sender: self)
+                    self.performSegue(withIdentifier: K.registerSegue, sender: self)
                 }
             }
         }

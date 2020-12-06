@@ -15,7 +15,7 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var messageTextfield: UITextField!
     let db = Firestore.firestore()
     
-    let messages = [
+    var messages = [
         Message(sender: "1@2.com", body: "Hello"),
         Message(sender: "2@1.com", body: "こんにちは"),
         Message(sender: "a@2.com", body: "你好"),        
@@ -23,6 +23,7 @@ class ChatViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadMessages()
         title = K.appName
         tableView.dataSource = self
         tableView.register(UINib(nibName: K.cellNibName, bundle: nil), forCellReuseIdentifier: K.cellIdentifier)
@@ -42,16 +43,39 @@ class ChatViewController: UIViewController {
     }
     
     @IBAction func sendPressed(_ sender: UIButton) {
+        
         if let messageBody = messageTextfield.text, let messageSender = Auth.auth().currentUser?.email{
             db.collection(K.FStore.collectionName).addDocument(data: [
                 K.FStore.senderField : messageSender,
                 K.FStore.bodyField : messageBody,
                 K.FStore.dateField : Date.init()
             ]) { (error) in
-                if let e = error {
-                    print("data saving error \(e)")
-                } else {
-                    print("data saving successful")
+                    if let e = error {
+                        print("data saving error \(e)")
+                    } else {
+                        print("data saving successful")
+                    }
+                }
+            }
+    }
+    
+    func loadMessages() {
+        db.collection(K.FStore.collectionName).getDocuments { (querySnapshot, error) in
+            if let e = error {
+                print("error getting document \(e)")
+            } else {
+                if let snapshot = querySnapshot {
+                    for document in snapshot.documents{
+                        let data = document.data()
+                        if let messageSender = data[K.FStore.senderField] as? String, let messageBody = data[K.FStore.bodyField] as? String {
+                            let newMessage = Message(sender: messageSender, body: messageBody)
+                            self.messages.append(newMessage)
+                            
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -68,11 +92,5 @@ extension ChatViewController: UITableViewDataSource{
         cell.largeContentTitle = "bla"
         cell.label.text = messages[indexPath.row].body
         return cell
-    }
-}
-
-extension UIViewController: UITableViewDelegate{
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
     }
 }

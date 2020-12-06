@@ -15,11 +15,7 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var messageTextfield: UITextField!
     let db = Firestore.firestore()
     
-    var messages = [
-        Message(sender: "1@2.com", body: "Hello"),
-        Message(sender: "2@1.com", body: "こんにちは"),
-        Message(sender: "a@2.com", body: "你好"),        
-    ]
+    var messages: [Message] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,22 +44,26 @@ class ChatViewController: UIViewController {
             db.collection(K.FStore.collectionName).addDocument(data: [
                 K.FStore.senderField : messageSender,
                 K.FStore.bodyField : messageBody,
-                K.FStore.dateField : Date.init()
+                K.FStore.dateField : Date().timeIntervalSince1970
             ]) { (error) in
-                    if let e = error {
-                        print("data saving error \(e)")
-                    } else {
-                        print("data saving successful")
-                    }
+                if let e = error {
+                    print("data saving error \(e)")
+                } else {
+                    print("data saving successful")
                 }
             }
+        }
     }
     
     func loadMessages() {
-        db.collection(K.FStore.collectionName).getDocuments { (querySnapshot, error) in
+        db.collection(K.FStore.collectionName)
+            .order(by: K.FStore.dateField )
+            .addSnapshotListener { (querySnapshot, error) in
+                
             if let e = error {
                 print("error getting document \(e)")
             } else {
+                self.messages = []
                 if let snapshot = querySnapshot {
                     for document in snapshot.documents{
                         let data = document.data()

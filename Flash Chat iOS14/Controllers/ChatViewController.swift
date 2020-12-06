@@ -50,6 +50,7 @@ class ChatViewController: UIViewController {
                     print("data saving error \(e)")
                 } else {
                     print("data saving successful")
+                    self.messageTextfield.text?.removeAll()
                 }
             }
         }

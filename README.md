@@ -18,5 +18,25 @@ Uses Firebase Firestore as a backend database to store and retrieve our messages
 * Learn about the App Lifecycle and how to use viewWillAppear or viewWillDisappear.
 * How to create direct Segues for navigation.
 
+## Screens
+
+<img src="documentation/screens.jpg">
+<br><br>
+
+### Registration & validation
+
+<img src="documentation/registration.gif">
+<br><br>
+
+### Login
+
+<img src="documentation/login.gif">
+<br><br>
+
+
+### Realtime Chat
+
+<img src="documentation/chat.gif">
+<br><br>
 
 >This is a companion project to The App Brewery's Complete App Developement Bootcamp.

@@ -25,7 +25,7 @@ Uses Firebase Firestore as a backend database to store and retrieve our messages
 
 Registration & validation | Login
 ------------ | -------------
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="documentation/registration.gif" width="250"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="documentation/login.gif" width="250">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="documentation/registration.gif" width="250"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="documentation/login.gif" width="250"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
 ### Realtime Chat
